@@ -1,0 +1,206 @@
+// ~->[DNET-1]->~
+
+// File created by an unlicensed user using Netica 7.01 on Sep 14, 2026 at 06:42:52 UTC.
+
+bnet Trinh_32975333_2ndSem2026FIT30 {
+autoupdate = TRUE;
+whenchanged = 1789368166;
+
+visual V1 {
+	defdispform = BELIEFBARS;
+	nodelabeling = TITLE;
+	NodeMaxNumEntries = 50;
+	nodefont = font {shape= "Arial"; size= 9;};
+	linkfont = font {shape= "Arial"; size= 9;};
+	ShowLinkStrengths = 1;
+	windowposn = (29, 29, 1134, 672);
+	resolution = 72;
+	drawingbounds = (1899, 945);
+	showpagebreaks = FALSE;
+	usegrid = TRUE;
+	gridspace = (6, 6);
+	NodeSet Node {BuiltIn = 1; Color = 0x00e1e1e1;};
+	NodeSet Nature {BuiltIn = 1; Color = 0x00f8eed2;};
+	NodeSet Deterministic {BuiltIn = 1; Color = 0x00d3caa6;};
+	NodeSet Finding {BuiltIn = 1; Color = 0x00c8c8c8;};
+	NodeSet Constant {BuiltIn = 1; Color = 0x00ffffff;};
+	NodeSet ConstantValue {BuiltIn = 1; Color = 0x00ffffb4;};
+	NodeSet Utility {BuiltIn = 1; Color = 0x00ffbdbd;};
+	NodeSet Decision {BuiltIn = 1; Color = 0x00dee8ff;};
+	NodeSet Documentation {BuiltIn = 1; Color = 0x00f0fafa;};
+	NodeSet Title {BuiltIn = 1; Color = 0x00ffffff;};
+	PrinterSetting A {
+		margins = (1270, 1270, 1270, 1270);
+		};
+	};
+
+node Age {
+	discrete = FALSE;
+	states = (Below_15, Below_45, Below_65, Above_65);
+	levels = (0, 15, 45, 65, 200);
+	kind = NATURE;
+	parents = ();
+	EqnDirty = TRUE;
+	whenchanged = 1789352891;
+	visual V1 {
+		center = (804, 336);
+		height = 7;
+		};
+	};
+
+node Weakened_Immunity {
+	discrete = TRUE;
+	states = (Yes, No);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Age);
+	probs = 
+		// Yes          No            // Age      
+		  (0.01,        0.99,         // Below 15 
+		   0.01,        0.99,         // Below 45 
+		   0.01,        0.99,         // Below 65 
+		   0.07,        0.93);        // Above 65 ;
+	whenchanged = 1789367158;
+	visual V1 {
+		center = (648, 462);
+		height = 8;
+		};
+	};
+
+node Pneumococcal_Vaccines {
+	discrete = TRUE;
+	states = (Up_to_date, Missing);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Age, Weakened_Immunity);
+	probs = 
+		// Up to date   Missing       // Age      Weakened_Immunity 
+		  (0.9,         0.1,          // Below 15 Yes               
+		   0.9,         0.1,          // Below 15 No                
+		   0.4,         0.6,          // Below 45 Yes               
+		   0.1,         0.9,          // Below 45 No                
+		   0.4,         0.6,          // Below 65 Yes               
+		   0.1,         0.9,          // Below 65 No                
+		   0.8,         0.2,          // Above 65 Yes               
+		   0.4,         0.6);         // Above 65 No                ;
+	whenchanged = 1789365961;
+	visual V1 {
+		center = (1002, 462);
+		height = 6;
+		link 1 {
+			path = ((877, 384), (962, 437));
+			};
+		};
+	};
+
+node Pneumonia {
+	discrete = TRUE;
+	states = (Viral, Bacterial, None);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Age, Pneumococcal_Vaccines, Weakened_Immunity);
+	probs = 
+		// Viral        Bacterial    None          // Age      Pneumococcal_Vaccines Weakened_Immunity 
+		  (0.45,        0.3,         0.25,         // Below 15 Up to date            Yes               
+		   0.55,        0.2,         0.25,         // Below 15 Up to date            No                
+		   0.15,        0.6,         0.25,         // Below 15 Missing               Yes               
+		   0.35,        0.4,         0.25,         // Below 15 Missing               No                
+		   0.675,       0.075,       0.25,         // Below 45 Up to date            Yes               
+		   0.7,         0.05,        0.25,         // Below 45 Up to date            No                
+		   0.6,         0.15,        0.25,         // Below 45 Missing               Yes               
+		   0.65,        0.1,         0.25,         // Below 45 Missing               No                
+		   0.675,       0.075,       0.25,         // Below 65 Up to date            Yes               
+		   0.7,         0.05,        0.25,         // Below 65 Up to date            No                
+		   0.6,         0.15,        0.25,         // Below 65 Missing               Yes               
+		   0.65,        0.1,         0.25,         // Below 65 Missing               No                
+		   0.475,       0.375,       0.15,         // Above 65 Up to date            Yes               
+		   0.6,         0.25,        0.15,         // Above 65 Up to date            No                
+		   0.1,         0.75,        0.15,         // Above 65 Missing               Yes               
+		   0.35,        0.5,         0.15);        // Above 65 Missing               No                ;
+	numcases = 
+		                 // Age      Pneumococcal_Vaccines Weakened_Immunity 
+		  (0.3,          // Below 15 Up to date            Yes               
+		   0.2,          // Below 15 Up to date            No                
+		   0.6,          // Below 15 Missing               Yes               
+		   0.4,          // Below 15 Missing               No                
+		   0.075,        // Below 45 Up to date            Yes               
+		   0.05,         // Below 45 Up to date            No                
+		   0.15,         // Below 45 Missing               Yes               
+		   0.1,          // Below 45 Missing               No                
+		   0.075,        // Below 65 Up to date            Yes               
+		   0.05,         // Below 65 Up to date            No                
+		   0.15,         // Below 65 Missing               Yes               
+		   0.1,          // Below 65 Missing               No                
+		   0.075,        // Above 65 Up to date            Yes               
+		   0.25,         // Above 65 Up to date            No                
+		   0.75,         // Above 65 Missing               Yes               
+		   0.5);         // Above 65 Missing               No                ;
+	whenchanged = 1789366990;
+	visual V1 {
+		center = (798, 630);
+		height = 5;
+		};
+	};
+
+node Shortness_of_Breath {
+	discrete = TRUE;
+	states = (Yes, No);
+	kind = NATURE;
+	parents = (Pneumonia);
+	whenchanged = 1789354726;
+	visual V1 {
+		center = (612, 780);
+		height = 1;
+		};
+	};
+
+node CRP {
+	discrete = FALSE;
+	states = (Low, Moderate, High);
+	levels = (0, 5, 40, 120);
+	kind = NATURE;
+	parents = (Pneumonia);
+	EqnDirty = TRUE;
+	whenchanged = 1789354728;
+	visual V1 {
+		center = (804, 798);
+		height = 2;
+		};
+	};
+
+node Blood_Culture {
+	discrete = TRUE;
+	states = (Positive, Negative, Inconclusive);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Pneumonia);
+	probs = 
+		// Positive     Negative     Inconclusive  // Pneumonia 
+		  (0.15,        0.8,         0.05,         // Viral     
+		   0.85,        0.05,        0.1,          // Bacterial 
+		   0.15,        0.8,         0.05);        // None      ;
+	whenchanged = 1789368166;
+	visual V1 {
+		center = (1008, 786);
+		height = 3;
+		};
+	};
+
+node XRay {
+	discrete = TRUE;
+	states = (Positive, Negative);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Pneumonia);
+	probs = 
+		// Positive     Negative      // Pneumonia 
+		  (0.3,         0.7,          // Viral     
+		   0.8,         0.2,          // Bacterial 
+		   0.02,        0.98);        // None      ;
+	whenchanged = 1789368077;
+	visual V1 {
+		center = (1206, 780);
+		height = 4;
+		};
+	};
+};

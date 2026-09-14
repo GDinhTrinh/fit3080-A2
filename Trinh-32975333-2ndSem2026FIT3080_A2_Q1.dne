@@ -1,0 +1,138 @@
+// ~->[DNET-1]->~
+
+// File created by an unlicensed user using Netica 7.01 on Sep 14, 2026 at 03:01:16 UTC.
+
+bnet Trinh_32975333_2ndSem2026FIT30 {
+autoupdate = TRUE;
+whenchanged = 1789354764;
+
+visual V1 {
+	defdispform = BELIEFBARS;
+	nodelabeling = TITLE;
+	NodeMaxNumEntries = 50;
+	nodefont = font {shape= "Arial"; size= 9;};
+	linkfont = font {shape= "Arial"; size= 9;};
+	ShowLinkStrengths = 1;
+	windowposn = (29, 29, 1134, 672);
+	scrollposn = (257, 337);
+	resolution = 72;
+	magnification = 1.68179;
+	drawingbounds = (1899, 945);
+	showpagebreaks = FALSE;
+	usegrid = TRUE;
+	gridspace = (6, 6);
+	NodeSet Node {BuiltIn = 1; Color = 0x00e1e1e1;};
+	NodeSet Nature {BuiltIn = 1; Color = 0x00f8eed2;};
+	NodeSet Deterministic {BuiltIn = 1; Color = 0x00d3caa6;};
+	NodeSet Finding {BuiltIn = 1; Color = 0x00c8c8c8;};
+	NodeSet Constant {BuiltIn = 1; Color = 0x00ffffff;};
+	NodeSet ConstantValue {BuiltIn = 1; Color = 0x00ffffb4;};
+	NodeSet Utility {BuiltIn = 1; Color = 0x00ffbdbd;};
+	NodeSet Decision {BuiltIn = 1; Color = 0x00dee8ff;};
+	NodeSet Documentation {BuiltIn = 1; Color = 0x00f0fafa;};
+	NodeSet Title {BuiltIn = 1; Color = 0x00ffffff;};
+	PrinterSetting A {
+		margins = (1270, 1270, 1270, 1270);
+		};
+	};
+
+node Age {
+	discrete = FALSE;
+	states = (Below_15, Below_45, Below_65, Above_65);
+	levels = (0, 15, 45, 65, 200);
+	kind = NATURE;
+	parents = ();
+	EqnDirty = TRUE;
+	whenchanged = 1789352891;
+	visual V1 {
+		center = (540, 480);
+		height = 1;
+		};
+	};
+
+node Pneumococcal_Vaccines {
+	discrete = TRUE;
+	states = (Up_to_date, Missing);
+	kind = NATURE;
+	parents = ();
+	whenchanged = 1789353509;
+	visual V1 {
+		center = (1002, 462);
+		height = 7;
+		};
+	};
+
+node Weakened_Immunity {
+	discrete = TRUE;
+	states = (Yes, No);
+	kind = NATURE;
+	parents = ();
+	whenchanged = 1789354758;
+	visual V1 {
+		center = (798, 468);
+		height = 8;
+		};
+	};
+
+node Pneumonia {
+	discrete = TRUE;
+	states = (Viral, Bacterial, None);
+	kind = NATURE;
+	parents = (Age, Pneumococcal_Vaccines, Weakened_Immunity);
+	whenchanged = 1789354764;
+	visual V1 {
+		center = (798, 630);
+		height = 6;
+		};
+	};
+
+node Shortness_of_Breath {
+	discrete = TRUE;
+	states = (Yes, No);
+	kind = NATURE;
+	parents = (Pneumonia);
+	whenchanged = 1789354726;
+	visual V1 {
+		center = (612, 780);
+		height = 2;
+		};
+	};
+
+node CRP {
+	discrete = FALSE;
+	states = (Low, Moderate, High);
+	levels = (0, 5, 40, 120);
+	kind = NATURE;
+	parents = (Pneumonia);
+	EqnDirty = TRUE;
+	whenchanged = 1789354728;
+	visual V1 {
+		center = (804, 798);
+		height = 3;
+		};
+	};
+
+node Blood_Culture {
+	discrete = TRUE;
+	states = (Positive, Negative, Inconclusive);
+	kind = NATURE;
+	parents = (Pneumonia);
+	whenchanged = 1789354731;
+	visual V1 {
+		center = (1008, 786);
+		height = 4;
+		};
+	};
+
+node XRay {
+	discrete = TRUE;
+	states = (Positive, Negative);
+	kind = NATURE;
+	parents = (Pneumonia);
+	whenchanged = 1789354734;
+	visual V1 {
+		center = (1206, 780);
+		height = 5;
+		};
+	};
+};
