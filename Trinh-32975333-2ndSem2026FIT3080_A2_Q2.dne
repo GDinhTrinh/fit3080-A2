@@ -1,10 +1,10 @@
 // ~->[DNET-1]->~
 
-// File created by an unlicensed user using Netica 7.01 on Sep 14, 2026 at 06:42:52 UTC.
+// File created by an unlicensed user using Netica 7.01 on Sep 14, 2026 at 06:54:25 UTC.
 
 bnet Trinh_32975333_2ndSem2026FIT30 {
 autoupdate = TRUE;
-whenchanged = 1789368166;
+whenchanged = 1789368818;
 
 visual V1 {
 	defdispform = BELIEFBARS;
@@ -14,8 +14,9 @@ visual V1 {
 	linkfont = font {shape= "Arial"; size= 9;};
 	ShowLinkStrengths = 1;
 	windowposn = (29, 29, 1134, 672);
+	scrollposn = (211, 0);
 	resolution = 72;
-	drawingbounds = (1899, 945);
+	drawingbounds = (2686, 1336);
 	showpagebreaks = FALSE;
 	usegrid = TRUE;
 	gridspace = (6, 6);
@@ -48,7 +49,7 @@ node Age {
 		};
 	};
 
-node Weakened_Immunity {
+node Immunocompromised {
 	discrete = TRUE;
 	states = (Yes, No);
 	kind = NATURE;
@@ -60,21 +61,24 @@ node Weakened_Immunity {
 		   0.01,        0.99,         // Below 45 
 		   0.01,        0.99,         // Below 65 
 		   0.07,        0.93);        // Above 65 ;
-	whenchanged = 1789367158;
+	whenchanged = 1789368557;
 	visual V1 {
 		center = (648, 462);
 		height = 8;
+		link 1 {
+			path = ((746, 384), (679, 437));
+			};
 		};
 	};
 
-node Pneumococcal_Vaccines {
+node PneumococcalVaccineUpToDate {
 	discrete = TRUE;
-	states = (Up_to_date, Missing);
+	states = (Yes, No);
 	kind = NATURE;
 	chance = CHANCE;
-	parents = (Age, Weakened_Immunity);
+	parents = (Age, Immunocompromised);
 	probs = 
-		// Up to date   Missing       // Age      Weakened_Immunity 
+		// Yes          No            // Age      Immunocompromised 
 		  (0.9,         0.1,          // Below 15 Yes               
 		   0.9,         0.1,          // Below 15 No                
 		   0.4,         0.6,          // Below 45 Yes               
@@ -83,7 +87,7 @@ node Pneumococcal_Vaccines {
 		   0.1,         0.9,          // Below 65 No                
 		   0.8,         0.2,          // Above 65 Yes               
 		   0.4,         0.6);         // Above 65 No                ;
-	whenchanged = 1789365961;
+	whenchanged = 1789368688;
 	visual V1 {
 		center = (1002, 462);
 		height = 6;
@@ -98,43 +102,43 @@ node Pneumonia {
 	states = (Viral, Bacterial, None);
 	kind = NATURE;
 	chance = CHANCE;
-	parents = (Age, Pneumococcal_Vaccines, Weakened_Immunity);
+	parents = (Age, PneumococcalVaccineUpToDate, Immunocompromised);
 	probs = 
-		// Viral        Bacterial    None          // Age      Pneumococcal_Vaccines Weakened_Immunity 
-		  (0.45,        0.3,         0.25,         // Below 15 Up to date            Yes               
-		   0.55,        0.2,         0.25,         // Below 15 Up to date            No                
-		   0.15,        0.6,         0.25,         // Below 15 Missing               Yes               
-		   0.35,        0.4,         0.25,         // Below 15 Missing               No                
-		   0.675,       0.075,       0.25,         // Below 45 Up to date            Yes               
-		   0.7,         0.05,        0.25,         // Below 45 Up to date            No                
-		   0.6,         0.15,        0.25,         // Below 45 Missing               Yes               
-		   0.65,        0.1,         0.25,         // Below 45 Missing               No                
-		   0.675,       0.075,       0.25,         // Below 65 Up to date            Yes               
-		   0.7,         0.05,        0.25,         // Below 65 Up to date            No                
-		   0.6,         0.15,        0.25,         // Below 65 Missing               Yes               
-		   0.65,        0.1,         0.25,         // Below 65 Missing               No                
-		   0.475,       0.375,       0.15,         // Above 65 Up to date            Yes               
-		   0.6,         0.25,        0.15,         // Above 65 Up to date            No                
-		   0.1,         0.75,        0.15,         // Above 65 Missing               Yes               
-		   0.35,        0.5,         0.15);        // Above 65 Missing               No                ;
+		// Viral        Bacterial    None          // Age      PneumococcalVaccineUpToDate Immunocompromised 
+		  (0.45,        0.3,         0.25,         // Below 15 Yes                         Yes               
+		   0.55,        0.2,         0.25,         // Below 15 Yes                         No                
+		   0.15,        0.6,         0.25,         // Below 15 No                          Yes               
+		   0.35,        0.4,         0.25,         // Below 15 No                          No                
+		   0.675,       0.075,       0.25,         // Below 45 Yes                         Yes               
+		   0.7,         0.05,        0.25,         // Below 45 Yes                         No                
+		   0.6,         0.15,        0.25,         // Below 45 No                          Yes               
+		   0.65,        0.1,         0.25,         // Below 45 No                          No                
+		   0.675,       0.075,       0.25,         // Below 65 Yes                         Yes               
+		   0.7,         0.05,        0.25,         // Below 65 Yes                         No                
+		   0.6,         0.15,        0.25,         // Below 65 No                          Yes               
+		   0.65,        0.1,         0.25,         // Below 65 No                          No                
+		   0.475,       0.375,       0.15,         // Above 65 Yes                         Yes               
+		   0.6,         0.25,        0.15,         // Above 65 Yes                         No                
+		   0.1,         0.75,        0.15,         // Above 65 No                          Yes               
+		   0.35,        0.5,         0.15);        // Above 65 No                          No                ;
 	numcases = 
-		                 // Age      Pneumococcal_Vaccines Weakened_Immunity 
-		  (0.3,          // Below 15 Up to date            Yes               
-		   0.2,          // Below 15 Up to date            No                
-		   0.6,          // Below 15 Missing               Yes               
-		   0.4,          // Below 15 Missing               No                
-		   0.075,        // Below 45 Up to date            Yes               
-		   0.05,         // Below 45 Up to date            No                
-		   0.15,         // Below 45 Missing               Yes               
-		   0.1,          // Below 45 Missing               No                
-		   0.075,        // Below 65 Up to date            Yes               
-		   0.05,         // Below 65 Up to date            No                
-		   0.15,         // Below 65 Missing               Yes               
-		   0.1,          // Below 65 Missing               No                
-		   0.075,        // Above 65 Up to date            Yes               
-		   0.25,         // Above 65 Up to date            No                
-		   0.75,         // Above 65 Missing               Yes               
-		   0.5);         // Above 65 Missing               No                ;
+		                 // Age      PneumococcalVaccineUpToDate Immunocompromised 
+		  (0.3,          // Below 15 Yes                         Yes               
+		   0.2,          // Below 15 Yes                         No                
+		   0.6,          // Below 15 No                          Yes               
+		   0.4,          // Below 15 No                          No                
+		   0.075,        // Below 45 Yes                         Yes               
+		   0.05,         // Below 45 Yes                         No                
+		   0.15,         // Below 45 No                          Yes               
+		   0.1,          // Below 45 No                          No                
+		   0.075,        // Below 65 Yes                         Yes               
+		   0.05,         // Below 65 Yes                         No                
+		   0.15,         // Below 65 No                          Yes               
+		   0.1,          // Below 65 No                          No                
+		   0.075,        // Above 65 Yes                         Yes               
+		   0.25,         // Above 65 Yes                         No                
+		   0.75,         // Above 65 No                          Yes               
+		   0.5);         // Above 65 No                          No                ;
 	whenchanged = 1789366990;
 	visual V1 {
 		center = (798, 630);
@@ -142,12 +146,12 @@ node Pneumonia {
 		};
 	};
 
-node Shortness_of_Breath {
+node ShortnessOfBreath {
 	discrete = TRUE;
-	states = (Yes, No);
+	states = (Present, Absent);
 	kind = NATURE;
 	parents = (Pneumonia);
-	whenchanged = 1789354726;
+	whenchanged = 1789368753;
 	visual V1 {
 		center = (612, 780);
 		height = 1;
@@ -168,7 +172,7 @@ node CRP {
 		};
 	};
 
-node Blood_Culture {
+node BloodCultureTest {
 	discrete = TRUE;
 	states = (Positive, Negative, Inconclusive);
 	kind = NATURE;
@@ -179,14 +183,17 @@ node Blood_Culture {
 		  (0.15,        0.8,         0.05,         // Viral     
 		   0.85,        0.05,        0.1,          // Bacterial 
 		   0.15,        0.8,         0.05);        // None      ;
-	whenchanged = 1789368166;
+	whenchanged = 1789368808;
 	visual V1 {
 		center = (1008, 786);
 		height = 3;
+		link 1 {
+			path = ((839, 662), (966, 755));
+			};
 		};
 	};
 
-node XRay {
+node XRayResult {
 	discrete = TRUE;
 	states = (Positive, Negative);
 	kind = NATURE;
@@ -197,10 +204,13 @@ node XRay {
 		  (0.3,         0.7,          // Viral     
 		   0.8,         0.2,          // Bacterial 
 		   0.02,        0.98);        // None      ;
-	whenchanged = 1789368077;
+	whenchanged = 1789368818;
 	visual V1 {
 		center = (1206, 780);
 		height = 4;
+		link 1 {
+			path = ((875, 657), (1139, 755));
+			};
 		};
 	};
 };
