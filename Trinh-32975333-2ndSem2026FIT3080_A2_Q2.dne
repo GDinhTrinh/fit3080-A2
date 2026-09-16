@@ -1,10 +1,10 @@
 // ~->[DNET-1]->~
 
-// File created by an unlicensed user using Netica 7.01 on Sep 14, 2026 at 06:54:25 UTC.
+// File created by an unlicensed user using Netica 7.01 on Sep 16, 2026 at 02:41:05 UTC.
 
 bnet Trinh_32975333_2ndSem2026FIT30 {
 autoupdate = TRUE;
-whenchanged = 1789368818;
+whenchanged = 1789526455;
 
 visual V1 {
 	defdispform = BELIEFBARS;
@@ -61,7 +61,8 @@ node Immunocompromised {
 		   0.01,        0.99,         // Below 45 
 		   0.01,        0.99,         // Below 65 
 		   0.07,        0.93);        // Above 65 ;
-	whenchanged = 1789368557;
+	numcases = 20;
+	whenchanged = 1789525965;
 	visual V1 {
 		center = (648, 462);
 		height = 8;
@@ -87,7 +88,8 @@ node PneumococcalVaccineUpToDate {
 		   0.1,         0.9,          // Below 65 No                
 		   0.8,         0.2,          // Above 65 Yes               
 		   0.4,         0.6);         // Above 65 No                ;
-	whenchanged = 1789368688;
+	numcases = 20;
+	whenchanged = 1789525953;
 	visual V1 {
 		center = (1002, 462);
 		height = 6;
@@ -121,25 +123,8 @@ node Pneumonia {
 		   0.6,         0.25,        0.15,         // Above 65 Yes                         No                
 		   0.1,         0.75,        0.15,         // Above 65 No                          Yes               
 		   0.35,        0.5,         0.15);        // Above 65 No                          No                ;
-	numcases = 
-		                 // Age      PneumococcalVaccineUpToDate Immunocompromised 
-		  (0.3,          // Below 15 Yes                         Yes               
-		   0.2,          // Below 15 Yes                         No                
-		   0.6,          // Below 15 No                          Yes               
-		   0.4,          // Below 15 No                          No                
-		   0.075,        // Below 45 Yes                         Yes               
-		   0.05,         // Below 45 Yes                         No                
-		   0.15,         // Below 45 No                          Yes               
-		   0.1,          // Below 45 No                          No                
-		   0.075,        // Below 65 Yes                         Yes               
-		   0.05,         // Below 65 Yes                         No                
-		   0.15,         // Below 65 No                          Yes               
-		   0.1,          // Below 65 No                          No                
-		   0.075,        // Above 65 Yes                         Yes               
-		   0.25,         // Above 65 Yes                         No                
-		   0.75,         // Above 65 No                          Yes               
-		   0.5);         // Above 65 No                          No                ;
-	whenchanged = 1789366990;
+	numcases = 20;
+	whenchanged = 1789526323;
 	visual V1 {
 		center = (798, 630);
 		height = 5;
@@ -183,7 +168,9 @@ node BloodCultureTest {
 		  (0.15,        0.8,         0.05,         // Viral     
 		   0.85,        0.05,        0.1,          // Bacterial 
 		   0.15,        0.8,         0.05);        // None      ;
-	whenchanged = 1789368808;
+	numcases = 60;
+	ExperBase = 1;
+	whenchanged = 1789526447;
 	visual V1 {
 		center = (1008, 786);
 		height = 3;
@@ -204,7 +191,8 @@ node XRayResult {
 		  (0.3,         0.7,          // Viral     
 		   0.8,         0.2,          // Bacterial 
 		   0.02,        0.98);        // None      ;
-	whenchanged = 1789368818;
+	numcases = 60;
+	whenchanged = 1789526455;
 	visual V1 {
 		center = (1206, 780);
 		height = 4;
