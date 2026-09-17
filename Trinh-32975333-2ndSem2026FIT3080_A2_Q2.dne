@@ -1,10 +1,11 @@
 // ~->[DNET-1]->~
 
-// File created by someone at MonashU using Netica 6.09 on Sep 17, 2026 at 02:47:39 UTC.
+// File created by someone at MonashU using Netica 6.09 on Sep 17, 2026 at 03:08:24 UTC.
 
 bnet Trinh_32975333_2ndSem2026FIT30 {
+AutoCompile = TRUE;
 autoupdate = TRUE;
-whenchanged = 1789613257;
+whenchanged = 1789614493;
 
 visual V1 {
 	defdispform = BELIEFBARS;
@@ -13,7 +14,7 @@ visual V1 {
 	nodefont = font {shape= "Arial"; size= 9;};
 	linkfont = font {shape= "Arial"; size= 9;};
 	ShowLinkStrengths = 1;
-	windowposn = (29, 29, 1134, 672);
+	windowposn = (-3, 2, 1083, 959);
 	scrollposn = (211, 0);
 	resolution = 72;
 	drawingbounds = (2686, 1336);
@@ -42,8 +43,12 @@ node Age {
 	kind = NATURE;
 	chance = CHANCE;
 	parents = ();
-	EqnDirty = TRUE;
-	whenchanged = 1789613206;
+	probs = 
+		// Below 15     Below 45     Below 65     Above 65     
+		  (0.1431179,   0.08081829,  0.1271632,   0.6489005);
+	numcases = 4949;
+	whenchanged = 1789614493;
+	belief = (0.1431179, 0.08081828, 0.1271632, 0.6489005);
 	visual V1 {
 		center = (804, 336);
 		height = 7;
@@ -58,12 +63,18 @@ node Immunocompromised {
 	parents = (Age);
 	probs = 
 		// Yes          No            // Age      
-		  (0.01,        0.99,         // Below 15 
-		   0.01,        0.99,         // Below 45 
-		   0.01,        0.99,         // Below 65 
-		   0.07,        0.93);        // Above 65 ;
-	numcases = 20;
-	whenchanged = 1789525965;
+		  (0.02275304,  0.9772469,    // Below 15 
+		   0.003001254, 0.9969987,    // Below 45 
+		   0.001933083, 0.9980669,    // Below 65 
+		   0.07554426,  0.9244558);   // Above 65 ;
+	numcases = 
+		                 // Age      
+		  (688.2908,     // Below 15 
+		   379.9697,     // Below 45 
+		   601.3309,     // Below 65 
+		   2993.409);    // Above 65 ;
+	whenchanged = 1789614493;
+	belief = (0.05276546, 0.9472346);
 	visual V1 {
 		center = (648, 462);
 		height = 8;
@@ -91,6 +102,7 @@ node PneumococcalVaccineUpToDate {
 		   0.4,         0.6);         // Above 65 No                ;
 	numcases = 20;
 	whenchanged = 1789525953;
+	belief = (0.4289193, 0.5710807);
 	visual V1 {
 		center = (1002, 462);
 		height = 6;
@@ -108,24 +120,42 @@ node Pneumonia {
 	parents = (Age, PneumococcalVaccineUpToDate, Immunocompromised);
 	probs = 
 		// Viral        Bacterial    None          // Age      PneumococcalVaccineUpToDate Immunocompromised 
-		  (0.45,        0.3,         0.25,         // Below 15 Yes                         Yes               
-		   0.55,        0.2,         0.25,         // Below 15 Yes                         No                
-		   0.15,        0.6,         0.25,         // Below 15 No                          Yes               
-		   0.35,        0.4,         0.25,         // Below 15 No                          No                
-		   0.675,       0.075,       0.25,         // Below 45 Yes                         Yes               
-		   0.7,         0.05,        0.25,         // Below 45 Yes                         No                
-		   0.6,         0.15,        0.25,         // Below 45 No                          Yes               
-		   0.65,        0.1,         0.25,         // Below 45 No                          No                
-		   0.675,       0.075,       0.25,         // Below 65 Yes                         Yes               
-		   0.7,         0.05,        0.25,         // Below 65 Yes                         No                
-		   0.6,         0.15,        0.25,         // Below 65 No                          Yes               
-		   0.65,        0.1,         0.25,         // Below 65 No                          No                
-		   0.475,       0.375,       0.15,         // Above 65 Yes                         Yes               
-		   0.6,         0.25,        0.15,         // Above 65 Yes                         No                
-		   0.1,         0.75,        0.15,         // Above 65 No                          Yes               
-		   0.35,        0.5,         0.15);        // Above 65 No                          No                ;
-	numcases = 20;
-	whenchanged = 1789526323;
+		  (0.4376847,   0.3319673,   0.2303481,    // Below 15 Yes                         Yes               
+		   0.6062941,   0.1530808,   0.2406252,    // Below 15 Yes                         No                
+		   0.1489522,   0.6043656,   0.2466822,    // Below 15 No                          Yes               
+		   0.3561245,   0.3819437,   0.2619318,    // Below 15 No                          No                
+		   0.675443,    0.07475617,  0.2498009,    // Below 45 Yes                         Yes               
+		   0.6937264,   0.05127679,  0.2549968,    // Below 45 Yes                         No                
+		   0.6008558,   0.1493327,   0.2498115,    // Below 45 No                          Yes               
+		   0.6156477,   0.1143072,   0.2700451,    // Below 45 No                          No                
+		   0.6755897,   0.07483275,  0.2495776,    // Below 65 Yes                         Yes               
+		   0.6997531,   0.04758731,  0.2526596,    // Below 65 Yes                         No                
+		   0.6009961,   0.1495488,   0.2494551,    // Below 65 No                          Yes               
+		   0.6561206,   0.07579944,  0.26808,      // Below 65 No                          No                
+		   0.5399981,   0.351308,    0.1086938,    // Above 65 Yes                         Yes               
+		   0.5520452,   0.2811162,   0.1668387,    // Above 65 Yes                         No                
+		   0.1062635,   0.7545004,   0.1392361,    // Above 65 No                          Yes               
+		   0.2894505,   0.5541829,   0.1563666);   // Above 65 No                          No                ;
+	numcases = 
+		                 // Age      PneumococcalVaccineUpToDate Immunocompromised 
+		  (32.4806,      // Below 15 Yes                         Yes               
+		   551.3218,     // Below 15 Yes                         No                
+		   21.46226,     // Below 15 No                          Yes               
+		   78.67986,     // Below 15 No                          No                
+		   20.39914,     // Below 45 Yes                         Yes               
+		   52.83649,     // Below 45 Yes                         No                
+		   20.58983,     // Below 45 No                          Yes               
+		   316.7992,     // Below 45 No                          No                
+		   20.42844,     // Below 65 Yes                         Yes               
+		   73.08497,     // Below 65 Yes                         No                
+		   20.6356,      // Below 65 No                          Yes               
+		   497.7986,     // Below 65 No                          No                
+		   192.1331,     // Above 65 Yes                         Yes               
+		   1020.424,     // Above 65 Yes                         No                
+		   62.5058,      // Above 65 No                          Yes               
+		   1521.422);    // Above 65 No                          No                ;
+	whenchanged = 1789614493;
+	belief = (0.4758642, 0.3318985, 0.1922373);
 	visual V1 {
 		center = (798, 630);
 		height = 5;
@@ -136,8 +166,20 @@ node ShortnessOfBreath {
 	discrete = TRUE;
 	states = (Present, Absent);
 	kind = NATURE;
+	chance = CHANCE;
 	parents = (Pneumonia);
-	whenchanged = 1789368753;
+	probs = 
+		// Present      Absent        // Pneumonia 
+		  (0.1918168,   0.8081832,    // Viral     
+		   0.3657601,   0.63424,      // Bacterial 
+		   0.01407104,  0.985929);    // None      ;
+	numcases = 
+		                 // Pneumonia 
+		  (954.5014,     // Viral     
+		   676.621,      // Bacterial 
+		   385.8777);    // None      ;
+	whenchanged = 1789614493;
+	belief = (0.2153789, 0.7846211);
 	visual V1 {
 		center = (612, 780);
 		height = 1;
@@ -149,9 +191,20 @@ node CRP {
 	states = (Low, Moderate, High);
 	levels = (0, 5, 40, 120);
 	kind = NATURE;
+	chance = CHANCE;
 	parents = (Pneumonia);
-	EqnDirty = TRUE;
-	whenchanged = 1789354728;
+	probs = 
+		// Low          Moderate     High          // Pneumonia 
+		  (0.44775,     0.5271336,   0.02511636,   // Viral     
+		   0.1216881,   0.6580824,   0.2202295,    // Bacterial 
+		   0.6404718,   0.3595281,   5.142199e-8); // None      ;
+	numcases = 
+		                 // Pneumonia 
+		  (974.7521,     // Viral     
+		   665.2959,     // Bacterial 
+		   395.9521);    // None      ;
+	whenchanged = 1789614493;
+	belief = (0.3765789, 0.5383753, 0.08504581);
 	visual V1 {
 		center = (804, 798);
 		height = 2;
@@ -166,17 +219,21 @@ node BloodCultureTest {
 	parents = (Pneumonia);
 	probs = 
 		// Positive     Negative     Inconclusive  // Pneumonia 
-		  (0.15,        0.8,         0.05,         // Viral     
-		   0.85,        0.05,        0.1,          // Bacterial 
-		   0.15,        0.8,         0.05);        // None      ;
-	numcases = 60;
-	ExperBase = 1;
-	whenchanged = 1789613206;
+		  (0.1212122,   0.8080807,   0.07070715,   // Viral     
+		   0.8444443,   0.07777786,  0.07777786,   // Bacterial 
+		   0.1369864,   0.7945204,   0.06849326);  // None      ;
+	numcases = 
+		                 // Pneumonia 
+		  (99,           // Viral     
+		   90,           // Bacterial 
+		   73);          // None      ;
+	whenchanged = 1789614267;
+	belief = (0.3642842, 0.5630875, 0.07262831);
 	visual V1 {
 		center = (1008, 786);
 		height = 3;
 		link 1 {
-			path = ((839, 662), (966, 755));
+			path = ((842, 664), (966, 755));
 			};
 		};
 	};
@@ -189,17 +246,23 @@ node XrayResult {
 	parents = (Pneumonia);
 	probs = 
 		// Positive     Negative      // Pneumonia 
-		  (0.3,         0.7,          // Viral     
-		   0.8,         0.2,          // Bacterial 
-		   0.02,        0.98);        // None      ;
-	numcases = 60;
-	whenchanged = 1789613257;
+		  (0.2727273,   0.7272727,    // Viral     
+		   0.8222222,   0.1777779,    // Bacterial 
+		   0.03013711,  0.9698629);   // None      ;
+	numcases = 
+		                 // Pneumonia 
+		  (99,           // Viral     
+		   90,           // Bacterial 
+		   73);          // None      ;
+	whenchanged = 1789614267;
+	belief = (0.4084689, 0.5915311);
 	visual V1 {
 		center = (1206, 780);
 		height = 4;
 		link 1 {
-			path = ((875, 657), (1137, 754));
+			path = ((881, 660), (1137, 754));
 			};
 		};
 	};
+ElimOrder = (ShortnessOfBreath, XrayResult, CRP, BloodCultureTest, Age, Immunocompromised, PneumococcalVaccineUpToDate, Pneumonia);
 };
