@@ -1,10 +1,10 @@
 // ~->[DNET-1]->~
 
-// File created by an unlicensed user using Netica 7.01 on Sep 16, 2026 at 02:41:05 UTC.
+// File created by someone at MonashU using Netica 6.09 on Sep 17, 2026 at 02:47:39 UTC.
 
 bnet Trinh_32975333_2ndSem2026FIT30 {
 autoupdate = TRUE;
-whenchanged = 1789526455;
+whenchanged = 1789613257;
 
 visual V1 {
 	defdispform = BELIEFBARS;
@@ -40,9 +40,10 @@ node Age {
 	states = (Below_15, Below_45, Below_65, Above_65);
 	levels = (0, 15, 45, 65, 200);
 	kind = NATURE;
+	chance = CHANCE;
 	parents = ();
 	EqnDirty = TRUE;
-	whenchanged = 1789352891;
+	whenchanged = 1789613206;
 	visual V1 {
 		center = (804, 336);
 		height = 7;
@@ -170,7 +171,7 @@ node BloodCultureTest {
 		   0.15,        0.8,         0.05);        // None      ;
 	numcases = 60;
 	ExperBase = 1;
-	whenchanged = 1789526447;
+	whenchanged = 1789613206;
 	visual V1 {
 		center = (1008, 786);
 		height = 3;
@@ -180,7 +181,7 @@ node BloodCultureTest {
 		};
 	};
 
-node XRayResult {
+node XrayResult {
 	discrete = TRUE;
 	states = (Positive, Negative);
 	kind = NATURE;
@@ -192,12 +193,12 @@ node XRayResult {
 		   0.8,         0.2,          // Bacterial 
 		   0.02,        0.98);        // None      ;
 	numcases = 60;
-	whenchanged = 1789526455;
+	whenchanged = 1789613257;
 	visual V1 {
 		center = (1206, 780);
 		height = 4;
 		link 1 {
-			path = ((875, 657), (1139, 755));
+			path = ((875, 657), (1137, 754));
 			};
 		};
 	};
